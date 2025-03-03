@@ -66,6 +66,12 @@ function App(): JSX.Element {
           );
         }
       });
+
+      // Calculate overall bias as mean
+      newVars.overall = Math.round(
+        (newVars.cultural + newVars.racial + newVars.class + newVars.gender) / 4
+      );
+
       console.log("New Vars:", newVars);
       return newVars;
     });

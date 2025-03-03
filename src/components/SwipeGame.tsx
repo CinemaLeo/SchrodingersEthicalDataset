@@ -17,7 +17,7 @@ const CardContent = ({ card }: { card: GameCard }): JSX.Element => {
   if (card.type === CardType.IMAGE_TEXT) {
     return (
       <div className="card-content">
-        <h2>What's your opinion on this label?</h2>
+        <h3>{card.prompt}</h3>
         <div className="card-image-container">
           <img
             src={card.imageUrl}
@@ -47,7 +47,6 @@ const CardContent = ({ card }: { card: GameCard }): JSX.Element => {
   } else {
     return (
       <div className="card-content">
-        <h2>Craft your dataset</h2>
         <p>{card.prompt}</p>
       </div>
     );
@@ -90,6 +89,15 @@ function SwipeGame({
     });
   }, [currentCardIndex]);
 
+  const handleSwipeEffect = (effect: Effect, defaultNextIndex: number) => {
+    if (effect.skipToId !== undefined) {
+      const skipIndex = cards.findIndex((card) => card.id === effect.skipToId);
+      setCurrentCardIndex(skipIndex >= 0 ? skipIndex : defaultNextIndex);
+    } else {
+      setCurrentCardIndex(defaultNextIndex);
+    }
+  };
+
   // Set up drag gesture
   const bind = useDrag(
     ({ down, movement: [mx], direction: [xDir], velocity: [vx] }) => {
@@ -106,21 +114,14 @@ function SwipeGame({
         rotate: down ? mx / 10 : isGone ? mx / 10 : 0,
         immediate: down,
         onRest: () => {
-          // When animation completes and card is swiped away
           if (isGone) {
-            // Process swipe effect
-            if (dir < 0) {
-              onSwipeLeft(cards[currentCardIndex].leftEffect);
-            } else {
-              onSwipeRight(cards[currentCardIndex].rightEffect);
-            }
-            // Reset position for next card
+            const effect =
+              dir < 0
+                ? cards[currentCardIndex].reject
+                : cards[currentCardIndex].accept;
+            dir < 0 ? onSwipeLeft(effect) : onSwipeRight(effect);
+            handleSwipeEffect(effect, currentCardIndex + 1);
             api.start({ x: 0, y: 0, rotate: 0, scale: 0.0, immediate: true });
-
-            // Move to next card or complete
-            setTimeout(() => {
-              setCurrentCardIndex(currentCardIndex + 1);
-            }, 300); // Delay to allow for animation
           }
         },
       });
@@ -137,11 +138,15 @@ function SwipeGame({
 
   // Create derived values for opacity using to()
   const leftOpacity = to(x, (value) =>
-    value < 0 ? Math.min(1, Math.abs(value) / 100) : 0.2
+    value < 0
+      ? Math.max(0.6, Math.min(1, Math.abs(value) / 50))
+      : Math.max(0.2, 0.6 - value / 50)
   );
 
   const rightOpacity = to(x, (value) =>
-    value > 0 ? Math.min(1, Math.abs(value) / 100) : 0.2
+    value > 0
+      ? Math.max(0.6, Math.min(1, value / 50))
+      : Math.max(0.2, 0.6 + value / 50)
   );
 
   if (!currentCard) {
@@ -151,8 +156,15 @@ function SwipeGame({
 
   return (
     <div className="swipe-game">
+      <div className="progress-bar-container">
+        <div
+          className="progress-bar"
+          style={{
+            width: `${((cards.length - cardsRemaining) / cards.length) * 100}%`,
+          }}
+        />
+      </div>
       <div className="cards-container">
-        <div className="cards-remaining">Cards remaining: {cardsRemaining}</div>
         <animated.div
           className={
             currentCard.type === CardType.TYPEWRITER ? "card-bubble" : "card"

@@ -37,7 +37,7 @@ function ResultsScreen({
                   backgroundColor: getBarColor(key, value),
                 }}
               ></div>
-              <div className="stat-value">{value}%</div>
+              {/* <div className="stat-value">{value}%</div> */}
             </div>
           </div>
         ))}
@@ -46,10 +46,7 @@ function ResultsScreen({
       <div className="results-evaluation" style={{ textAlign: "center" }}>
         <h3>Your Dataset is...</h3>
         <h1>{generateSummary(variables)}</h1>
-        <br></br>
-        <p>{generateEvaluation(variables)}</p>
       </div>
-
       <button onClick={onRestart} className="restart-button">
         Play Again
       </button>
@@ -77,26 +74,26 @@ function getBarColor(stat: string, value: number): string {
   return scheme[2];
 }
 
-function generateEvaluation(variables: GameVariables): string {
-  // Generate a text evaluation based on the variable values
-  const highestStat = Object.entries(variables).reduce(
-    (max, [key, value]) => (value > max.value ? { key, value } : max),
-    { key: "", value: 0 }
-  );
-
-  const lowestStat = Object.entries(variables).reduce(
-    (min, [key, value]) => (value < min.value ? { key, value } : min),
-    { key: "", value: 100 }
-  );
-
-  return `You prioritized ${
-    labelMappings[highestStat.key] ||
-    highestStat.key.charAt(0).toUpperCase() + highestStat.key.slice(1)
-  } but it came at the cost of ${
-    labelMappings[lowestStat.key] ||
-    lowestStat.key.charAt(0).toUpperCase() + lowestStat.key.slice(1)
-  }.`;
-}
+// function generateEvaluation(variables: GameVariables): string {
+//   // Generate a text evaluation based on the variable values
+//   const highestStat = Object.entries(variables).reduce(
+//     (max, [key, value]) => (value > max.value ? { key, value } : max),
+//     { key: "", value: 0 }
+//   );
+//
+//   const lowestStat = Object.entries(variables).reduce(
+//     (min, [key, value]) => (value < min.value ? { key, value } : min),
+//     { key: "", value: 100 }
+//   );
+//
+//   return `You prioritized ${
+//     labelMappings[highestStat.key] ||
+//     highestStat.key.charAt(0).toUpperCase() + highestStat.key.slice(1)
+//   } but it came at the cost of ${
+//     labelMappings[lowestStat.key] ||
+//     lowestStat.key.charAt(0).toUpperCase() + lowestStat.key.slice(1)
+//   }.`;
+// }
 
 function generateSummary(variables: GameVariables): string {
   const intensityWords = {
@@ -117,11 +114,11 @@ function generateSummary(variables: GameVariables): string {
   > = {
     quantity: { high: "comprehensive", low: "incomplete" },
     privacy: { high: "secure", low: "illegal" },
-    cultural: { high: "inclusive", low: "biased" },
-    racial: { high: "equitable", low: "racist" },
-    class: { high: "balanced", low: "classist" },
-    gender: { high: "fair", low: "sexist" },
-    overall: { high: "excellent", low: "problematic" },
+    cultural: { high: "culturally-specific", low: "inclusive" },
+    racial: { high: "racist", low: "equitable" },
+    class: { high: "classist", low: "balanced" },
+    gender: { high: "sexist", low: "fair" },
+    overall: { high: "biased", low: "unbiased" },
   };
 
   // Find the most extreme value

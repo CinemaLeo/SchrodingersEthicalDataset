@@ -7,11 +7,12 @@ export enum CardType {
 }
 
 export interface BaseGameCard {
+  section: number;
   id: number;
   type: CardType;
   prompt: string;
-  leftEffect: Effect;
-  rightEffect: Effect;
+  reject: Effect;
+  accept: Effect;
   leftLabel: string;
   rightLabel: string;
 }
@@ -37,6 +38,12 @@ export interface ImageTextCard extends BaseGameCard {
 export type GameCard = TitleCard | TextOnlyCard | TypewriterCard | ImageTextCard;
 
 export interface Effect {
-    [key: string]: number;
-  }
+  quantity?: number;
+  privacy?: number;
+  cultural?: number;
+  racial?: number;
+  class?: number;
+  gender?: number;
+  skipToId?: number;
+}
   

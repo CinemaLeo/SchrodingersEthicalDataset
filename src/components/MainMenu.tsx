@@ -7,7 +7,10 @@ interface MainMenuProps {
 function MainMenu({ onStart }: MainMenuProps): JSX.Element {
   return (
     <div className="main-menu">
-      <h1>The Cat Model</h1>
+      <h1>
+        Schrodinger's <br />
+        Ethical Dataset
+      </h1>
       <p></p>
       <button onClick={onStart} className="start-button">
         Start
