@@ -3,6 +3,7 @@ import { JSX, useState } from "react";
 import MainMenu from "./components/MainMenu";
 import SwipeGame from "./components/SwipeGame";
 import ResultsScreen from "./components/ResultsScreen";
+import Credits from "./components/Credits";
 import ParticlesBackground from "./components/ParticlesBackground";
 import {
   Stage0Cards,
@@ -34,7 +35,8 @@ type GameStage =
   | "stage3"
   | "stage4"
   | "stage5"
-  | "results";
+  | "results"
+  | "credits";
 
 function App(): JSX.Element {
   // Game state
@@ -109,6 +111,9 @@ function App(): JSX.Element {
         break;
     }
   };
+  const handleContinue = () => {
+    setGameStage("credits");
+  };
   const restartGame = (): void => {
     setGameStage("menu");
     setGameVariables({
@@ -143,8 +148,9 @@ function App(): JSX.Element {
       )}
 
       {gameStage === "results" && (
-        <ResultsScreen variables={gameVariables} onRestart={restartGame} />
+        <ResultsScreen variables={gameVariables} onContinue={handleContinue} />
       )}
+      {gameStage === "credits" && <Credits onRestart={restartGame} />}
     </div>
   );
 }

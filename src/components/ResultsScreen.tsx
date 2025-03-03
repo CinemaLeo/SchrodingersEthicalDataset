@@ -3,7 +3,7 @@ import { GameVariables } from "../App";
 
 interface ResultsScreenProps {
   variables: GameVariables;
-  onRestart: () => void;
+  onContinue: () => void;
 }
 
 const labelMappings: Record<string, string> = {
@@ -18,11 +18,12 @@ const labelMappings: Record<string, string> = {
 
 function ResultsScreen({
   variables,
-  onRestart,
+  onContinue,
 }: ResultsScreenProps): JSX.Element {
   return (
     <div className="results-screen">
-      <h1></h1>
+      <h1>Dataset Certification</h1>
+      <h2>Schrodinger's Ethical Dataset</h2>
       <div className="stat-bars">
         {Object.entries(variables).map(([key, value]) => (
           <div key={key} className="stat-item">
@@ -45,10 +46,11 @@ function ResultsScreen({
 
       <div className="results-evaluation" style={{ textAlign: "center" }}>
         <h3>Your Dataset is...</h3>
-        <h1>{generateSummary(variables)}</h1>
+        <h1 style={{ color: "#000000" }}>{generateSummary(variables)}</h1>
       </div>
-      <button onClick={onRestart} className="restart-button">
-        Play Again
+
+      <button onClick={onContinue} className="restart-button">
+        Continue
       </button>
     </div>
   );
