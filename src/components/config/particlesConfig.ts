@@ -1,7 +1,9 @@
 import cats from './catImages.json'
 
+const base = process.env.NODE_ENV === 'production' ? '/SchrodingersEthicalDataset' : ''
+
 const imageList = cats.cats.map(path => ({
-  src: path,
+  src: `${base}/${path}`,
   width: 32,
   height: 32
 }))
