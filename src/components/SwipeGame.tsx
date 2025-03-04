@@ -81,7 +81,7 @@ function SwipeGame({
     // Preload next image if it exists and is an image card
     const nextCard = cards[currentCardIndex + 1];
     if (nextCard && nextCard.type === CardType.IMAGE_TEXT) {
-      preloadImage(nextCard.imageUrl);
+      preloadImage(base + nextCard.imageUrl);
     }
   }, [currentCardIndex, cards]);
 

@@ -129,7 +129,7 @@
   position: absolute;
   width: 75%;
   height: 50%;
-  background-color: #b0cdd1 ;
+  background-color: #e6e6e6 ;
   border-radius: 40px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -151,7 +151,7 @@
   height: 0;
   border-left: 30px solid transparent;
   border-right: 30px solid transparent;
-  border-top: 30px solid #b0cdd1 ;
+  border-top: 30px solid #e6e6e6 ;
 }
 
 .card-content {
