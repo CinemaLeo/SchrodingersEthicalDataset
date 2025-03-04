@@ -8,6 +8,11 @@ import Typewriter from "./Typewriter";
 const base =
   process.env.NODE_ENV === "production" ? "/SchrodingersEthicalDataset" : "";
 
+const preloadImage = (url: string) => {
+  const img = new Image();
+  img.src = base + url;
+};
+
 interface SwipeGameProps {
   cards: GameCard[];
   onSwipeLeft: (effect: Effect) => void;
@@ -23,7 +28,7 @@ const CardContent = ({ card }: { card: GameCard }): JSX.Element => {
         <h3>{card.prompt}</h3>
         <div className="card-image-container">
           <img
-            src={card.imageUrl}
+            src={base + card.imageUrl}
             alt={card.imageLabel}
             className="card-image"
           />
@@ -71,6 +76,14 @@ function SwipeGame({
       onComplete();
     }
   }, [currentCardIndex, cards.length, onComplete]);
+
+  useEffect(() => {
+    // Preload next image if it exists and is an image card
+    const nextCard = cards[currentCardIndex + 1];
+    if (nextCard && nextCard.type === CardType.IMAGE_TEXT) {
+      preloadImage(nextCard.imageUrl);
+    }
+  }, [currentCardIndex, cards]);
 
   // Updated spring animation to include scale
   const [{ x, y, rotate, scale }, api] = useSpring(() => ({
