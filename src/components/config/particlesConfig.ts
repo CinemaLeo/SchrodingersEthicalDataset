@@ -1,7 +1,7 @@
-const images = import.meta.glob('/public/images/cats_from_memes/*.jpg')
+import cats from './catImages.json'
 
-const imageList = Object.keys(images).map(path => ({
-  src: path.replace('/public', ''),
+const imageList = cats.cats.map(path => ({
+  src: path,
   width: 32,
   height: 32
 }))
