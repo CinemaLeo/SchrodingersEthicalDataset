@@ -38,7 +38,7 @@ function Credits({ onRestart }: CreditsProps): JSX.Element {
             >
               Building Better Datasets
             </a>
-            {" by Kate Crawford (2024)"}
+            {" by Kate Crawford and Will Orr (2024)"}
           </li>
           <li>
             <a
