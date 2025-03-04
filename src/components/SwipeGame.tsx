@@ -5,6 +5,9 @@ import { useDrag } from "@use-gesture/react";
 import { GameCard, Effect, CardType } from "./types";
 import Typewriter from "./Typewriter";
 
+const base =
+  process.env.NODE_ENV === "production" ? "/SchrodingersEthicalDataset" : "";
+
 interface SwipeGameProps {
   cards: GameCard[];
   onSwipeLeft: (effect: Effect) => void;

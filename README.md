@@ -1,5 +1,7 @@
 # Schrödinger's Ethical Dataset
 
+#### An interactive artwork / game interrogating how biases are created in datasets used for machine learning and AI.
+
 ### [Sahra Azadzoy](https://www.instagram.com/sahra.azd/) & [Leo Bayly Barton](https://www.leobaylybarton.com)
 
 #### Based on:
