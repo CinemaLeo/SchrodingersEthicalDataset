@@ -23,7 +23,7 @@ function ResultsScreen({
   return (
     <div className="results-screen">
       <h1>Dataset Certification</h1>
-      <h2>Schrodinger's Ethical Dataset</h2>
+      <h2>Schrödinger's Ethical Dataset</h2>
       <div className="stat-bars">
         {Object.entries(variables).map(([key, value]) => (
           <div key={key} className="stat-item">

@@ -1,3 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* FONTS */
+
+@font-face {
+  font-family: 'Jersey20';
+  src: url('/fonts/Jersey_20/Jersey20-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  src: url('/fonts/Kalam/Kalam-Light.ttf') format('truetype');
+  font-weight: light;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  src: url('/fonts/Kalam/Kalam-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kalam';
+  src: url('/fonts/Kalam/Kalam-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -8,9 +40,6 @@
   background-color: #f5f5f5;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
-
 
 /* Main Menu Styles */
 .main-menu {
@@ -23,13 +52,17 @@
 
 .main-menu h1 {
   color:#e0e0e0;
+  font-family: 'Jersey20';
+  letter-spacing: 2px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .start-button {
   margin-top: 30px;
   padding: 12px 30px;
-  font-size: 18px;
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-family: 'Jersey20';
   background-color: #4caf50;
   color: white;
   border: none;
@@ -123,6 +156,21 @@
 .card-content {
   padding: 20px;
   text-align: center;
+  font-family: 'Jersey20';
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.speech-bubble-content
+{
+  padding: 20px;
+  text-align: center;
+  font-family: 'Roboto';
   width: 100%;
   display: flex;
   flex-direction: column;

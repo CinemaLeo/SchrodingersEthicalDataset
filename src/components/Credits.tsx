@@ -7,7 +7,7 @@ interface CreditsProps {
 function Credits({ onRestart }: CreditsProps): JSX.Element {
   return (
     <div className="credits-screen">
-      <h1>Schrodinger's Ethical Dataset</h1>
+      <h1>Schrödinger's Ethical Dataset</h1>
       <div className="credits-content">
         <br />
         <h3>

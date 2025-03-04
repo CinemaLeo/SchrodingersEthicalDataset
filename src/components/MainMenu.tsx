@@ -8,7 +8,7 @@ function MainMenu({ onStart }: MainMenuProps): JSX.Element {
   return (
     <div className="main-menu">
       <h1>
-        Schrodinger's <br />
+        Schrödinger's <br />
         Ethical Dataset
       </h1>
       <p></p>

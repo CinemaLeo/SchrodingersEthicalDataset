@@ -33,7 +33,7 @@ const CardContent = ({ card }: { card: GameCard }): JSX.Element => {
   } else if (card.type === CardType.TYPEWRITER) {
     console.log("Typewriter Card Prompt:", card.prompt);
     return (
-      <div className="card-content">
+      <div className="speech-bubble-content">
         <Typewriter text={card.prompt} speed={33} />
       </div>
     );
@@ -155,10 +155,7 @@ function SwipeGame({
   }
 
   return (
-    <div
-      className="swipe-game"
-      style={{ overflow: "hidden", position: "fixed" }}
-    >
+    <div className="swipe-game" style={{ position: "fixed" }}>
       <div className="progress-bar-container">
         <div
           className="progress-bar"
