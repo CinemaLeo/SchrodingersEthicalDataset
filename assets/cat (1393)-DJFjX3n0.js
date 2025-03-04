@@ -1,0 +1,1 @@
+const t="/SchrodingersEthicalDataset/assets/cat%20(1393)-BLXJVzS4.jpg";export{t as default};

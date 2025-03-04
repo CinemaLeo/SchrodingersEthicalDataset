@@ -1,1 +1,0 @@
-const t="/assets/cat%20(568)-BrWkH3ge.jpg";export{t as default};
