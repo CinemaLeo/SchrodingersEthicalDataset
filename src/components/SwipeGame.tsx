@@ -156,14 +156,18 @@ function SwipeGame({
 
   return (
     <div className="swipe-game" style={{ position: "fixed" }}>
-      <div className="progress-bar-container">
-        <div
-          className="progress-bar"
-          style={{
-            width: `${((cards.length - cardsRemaining) / cards.length) * 100}%`,
-          }}
-        />
-      </div>
+      {currentCard.section !== 5 && (
+        <div className="progress-bar-container">
+          <div
+            className="progress-bar"
+            style={{
+              width: `${
+                ((cards.length - cardsRemaining) / cards.length) * 100
+              }%`,
+            }}
+          />
+        </div>
+      )}
       <div className="cards-container">
         <animated.div
           className={

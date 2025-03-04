@@ -11,7 +11,14 @@ function Credits({ onRestart }: CreditsProps): JSX.Element {
       <div className="credits-content">
         <br />
         <h3>
-          Sahra Azadzoy &{" "}
+          <a
+            href="https://www.instagram.com/sahra.azd/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Sahra Azadzoy
+          </a>{" "}
+          &<br />{" "}
           <a
             href="https://www.leobaylybarton.com"
             target="_blank"
@@ -21,9 +28,7 @@ function Credits({ onRestart }: CreditsProps): JSX.Element {
           </a>
         </h3>
         <br />
-        <br />
-        <br />
-        <h2>Based on:</h2>
+        <h4>Based on:</h4>
         <ul>
           <li>
             <a
@@ -44,6 +49,27 @@ function Credits({ onRestart }: CreditsProps): JSX.Element {
               A Taxonomy of Challenges to Curating Fair Datasets
             </a>
             {" by Dora Zhao, M. Scheuerman, Alice Xiang et al. (2024)"}
+          </li>
+          <br />
+          <li>
+            Images from{" "}
+            <a
+              href="https://www.kaggle.com/datasets/vekosek/cats-from-memes"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              'Cats from memes'
+            </a>{" "}
+            dataset
+            <br />
+            under{" "}
+            <a
+              href="https://www.apache.org/licenses/LICENSE-2.0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Apache 2.0 License
+            </a>
           </li>
         </ul>
 

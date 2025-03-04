@@ -130,9 +130,13 @@ function generateSummary(variables: GameVariables): string {
     deviation: Math.abs(50 - value), // How far from neutral (50%)
   }));
 
-  const mostExtreme = values.reduce((max, curr) =>
-    curr.deviation > max.deviation ? curr : max
-  );
+  // Find all values that share the maximum deviation
+  const maxDeviation = Math.max(...values.map((v) => v.deviation));
+  const extremeValues = values.filter((v) => v.deviation === maxDeviation);
+
+  // Randomly select one of the extreme values
+  const mostExtreme =
+    extremeValues[Math.floor(Math.random() * extremeValues.length)];
 
   // Select intensity based on deviation
   let intensityBank =

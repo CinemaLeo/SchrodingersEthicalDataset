@@ -63,6 +63,16 @@ export const Stage0Cards: GameCard[] = [
     section: 0,
     id: 5,
     type: CardType.TYPEWRITER,
+    prompt: "Oh, one more thing. They said to ensure the dataset was unbiased!",
+    reject: {},
+    accept: {},
+    leftLabel: "Unbiased?",
+    rightLabel: "Easy!",
+  },
+  {
+    section: 0,
+    id: 6,
+    type: CardType.TYPEWRITER,
     prompt:
       "I'm sure you know all about dataset ethics, so I'll leave you to it!",
     reject: {},
@@ -72,7 +82,7 @@ export const Stage0Cards: GameCard[] = [
   },
   {
     section: 0,
-    id: 6,
+    id: 7,
     type: CardType.TYPEWRITER,
     prompt: "Good luck!",
     reject: {},
