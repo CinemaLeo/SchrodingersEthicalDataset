@@ -6,7 +6,7 @@ import { GameCard, Effect, CardType } from "./types";
 import Typewriter from "./Typewriter";
 
 const base =
-  process.env.NODE_ENV === "production" ? "/SchrodingersEthicalDataset" : "";
+  process.env.NODE_ENV === "production" ? "/SchrodingersEthicalDataset/" : "/";
 
 const preloadImage = (url: string) => {
   const img = new Image();
