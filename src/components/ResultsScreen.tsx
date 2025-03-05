@@ -22,8 +22,8 @@ function ResultsScreen({
 }: ResultsScreenProps): JSX.Element {
   return (
     <div className="results-screen">
-      <h1>Dataset Certification</h1>
-      <h2>Schrödinger's Ethical Dataset</h2>
+      <h1>Certification of Bias</h1>
+      <h4>Schrödinger's Ethical Dataset</h4>
       <div className="stat-bars">
         {Object.entries(variables).map(([key, value]) => (
           <div key={key} className="stat-item">
