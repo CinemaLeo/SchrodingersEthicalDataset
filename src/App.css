@@ -155,9 +155,9 @@
   right: 50px;
   width: 0;
   height: 0;
-  border-left: 100px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 80px solid #e6e6e6 ;
+  border-left: 50px solid transparent;
+  border-right: 2px solid transparent;
+  border-top: 40px solid #e6e6e6 ;
 }
 
 .card-content {
@@ -258,10 +258,30 @@
 
 .swipe-instructions {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  font-family: 'Jersey20';
+  font-size: 25px;
   width: 100%;
   margin-top: 20px;
-  color: #666;
+  position: absolute;
+  bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  padding: 10px 0;
+  letter-spacing: 2px;
+  animation: pulse 1.5s infinite;
+  z-index: 100;
+}
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
 }
 
 .progress-bar-container {

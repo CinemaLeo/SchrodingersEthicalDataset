@@ -69,6 +69,16 @@ function SwipeGame({
 }: SwipeGameProps): JSX.Element {
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [showInstructions, setShowInstructions] = useState<boolean>(true);
+
+  const handleSwipe = (direction: "left" | "right") => {
+    if (direction === "left") {
+      onSwipeLeft(cards[currentCardIndex].leftEffect);
+    } else {
+      onSwipeRight(cards[currentCardIndex].rightEffect);
+    }
+    setCurrentCardIndex(currentCardIndex + 1);
+  };
 
   useEffect(() => {
     if (currentCardIndex >= cards.length) {
@@ -131,6 +141,8 @@ function SwipeGame({
         immediate: down,
         onRest: () => {
           if (isGone) {
+            setShowInstructions(false); // When a card is swiped, hide the instructions
+
             const effect =
               dir < 0
                 ? cards[currentCardIndex].reject
@@ -219,6 +231,9 @@ function SwipeGame({
           </div>
         </animated.div>
       </div>
+      {showInstructions && (
+        <div className="swipe-instructions">{"↤ swipe ↦"}</div>
+      )}
     </div>
   );
 }
