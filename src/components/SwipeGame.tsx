@@ -1,9 +1,10 @@
-// @ts-nocheck to avoid fucking bullshit animated.div errors
+// @ts-nocheck
 import React, { JSX, useState, useEffect } from "react";
 import { useSpring, animated, to } from "react-spring";
 import { useDrag } from "@use-gesture/react";
 import { GameCard, Effect, CardType } from "./types";
 import Typewriter from "./Typewriter";
+import { useLanguage } from "../context/LanguageContext";
 
 const base =
   process.env.NODE_ENV === "production" ? "/SchrodingersEthicalDataset/" : "/";
@@ -18,44 +19,51 @@ interface SwipeGameProps {
   onSwipeLeft: (effect: Effect) => void;
   onSwipeRight: (effect: Effect) => void;
   onComplete: () => void;
+  onQuit: () => void;
 }
 
-// Component to render the appropriate card content based on card type
+// Pick the right field based on language, falling back to English
+const pick = (en: string, zh?: string, lang?: string): string =>
+  lang === "zh_tw" && zh ? zh : en;
+
 const CardContent = ({ card }: { card: GameCard }): JSX.Element => {
+  const { language } = useLanguage();
+  const prompt = pick(card.prompt, card.prompt_zh, language);
+  const imageLabel = pick(card.imageLabel ?? "", card.imageLabel_zh, language);
+
   if (card.type === CardType.IMAGE_TEXT) {
     return (
       <div className="card-content">
-        <h3>{card.prompt}</h3>
+        <h3>{prompt}</h3>
         <div className="card-image-container">
           <img
             src={base + card.imageUrl}
-            alt={card.imageLabel}
+            alt={imageLabel}
             className="card-image"
           />
           <div className="image-label">
-            Label: <strong>{card.imageLabel}</strong>
+            Label: <strong>{imageLabel}</strong>
           </div>
         </div>
       </div>
     );
   } else if (card.type === CardType.TYPEWRITER) {
-    console.log("Typewriter Card Prompt:", card.prompt);
     return (
       <div className="speech-bubble-content">
-        <Typewriter text={card.prompt} speed={33} />
+        <Typewriter text={prompt} speed={33} />
       </div>
     );
   } else if (card.type === CardType.TITLE) {
     return (
       <div
         className="card-content"
-        dangerouslySetInnerHTML={{ __html: card.prompt }}
+        dangerouslySetInnerHTML={{ __html: prompt }}
       />
     );
   } else {
     return (
       <div className="card-content">
-        <p>{card.prompt}</p>
+        <p>{prompt}</p>
       </div>
     );
   }
@@ -66,36 +74,27 @@ function SwipeGame({
   onSwipeLeft,
   onSwipeRight,
   onComplete,
+  onQuit,
 }: SwipeGameProps): JSX.Element {
+  const { t, language } = useLanguage();
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [showInstructions, setShowInstructions] = useState<boolean>(true);
 
-  const handleSwipe = (direction: "left" | "right") => {
-    if (direction === "left") {
-      onSwipeLeft(cards[currentCardIndex].leftEffect);
-    } else {
-      onSwipeRight(cards[currentCardIndex].rightEffect);
-    }
-    setCurrentCardIndex(currentCardIndex + 1);
-  };
-
   useEffect(() => {
     if (currentCardIndex >= cards.length) {
-      setCurrentCardIndex(0); // Reset for next section
+      setCurrentCardIndex(0);
       onComplete();
     }
   }, [currentCardIndex, cards.length, onComplete]);
 
   useEffect(() => {
-    // Preload next image if it exists and is an image card
     const nextCard = cards[currentCardIndex + 1];
     if (nextCard && nextCard.type === CardType.IMAGE_TEXT) {
       preloadImage(nextCard.imageUrl);
     }
   }, [currentCardIndex, cards]);
 
-  // Updated spring animation to include scale
   const [{ x, y, rotate, scale }, api] = useSpring(() => ({
     x: 0,
     y: 0,
@@ -104,15 +103,8 @@ function SwipeGame({
     config: { tension: 200, friction: 20 },
   }));
 
-  // Trigger entrance animation on card change
   useEffect(() => {
-    api.start({
-      scale: 1,
-      config: {
-        tension: 260,
-        friction: 20,
-      },
-    });
+    api.start({ scale: 1, config: { tension: 260, friction: 20 } });
   }, [currentCardIndex]);
 
   const handleSwipeEffect = (effect: Effect, defaultNextIndex: number) => {
@@ -124,25 +116,26 @@ function SwipeGame({
     }
   };
 
-  // Set up drag gesture
+  const handleQuit = () => {
+    if (window.confirm(t("game.quitConfirm"))) {
+      onQuit();
+    }
+  };
+
   const bind = useDrag(
     ({ down, movement: [mx], direction: [xDir], velocity: [vx] }) => {
-      const trigger = vx > 0.2; // Minimum velocity to trigger swipe
-      const dir = xDir < 0 ? -1 : 1; // Direction of the swipe
-
-      // If swiping and above velocity threshold, or if released above a distance threshold
+      const trigger = vx > 0.2;
+      const dir = xDir < 0 ? -1 : 1;
       const isGone = !down && (trigger || Math.abs(mx) > 100);
 
-      // Spring animation
       api.start({
         x: down ? mx : isGone ? window.innerWidth * dir : 0,
-        y: down ? 0 : 0,
+        y: 0,
         rotate: down ? mx / 10 : isGone ? mx / 10 : 0,
         immediate: down,
         onRest: () => {
           if (isGone) {
-            setShowInstructions(false); // When a card is swiped, hide the instructions
-
+            setShowInstructions(false);
             const effect =
               dir < 0
                 ? cards[currentCardIndex].reject
@@ -155,47 +148,61 @@ function SwipeGame({
       });
 
       setIsDragging(down);
-    }
+    },
   );
 
-  // Current card
   const currentCard = cards[currentCardIndex];
-
-  // Cards remaining counter
   const cardsRemaining = cards.length - currentCardIndex;
 
-  // Create derived values for opacity using to()
   const leftOpacity = to(x, (value) =>
     value < 0
       ? Math.max(0.6, Math.min(1, Math.abs(value) / 50))
-      : Math.max(0.2, 0.6 - value / 50)
+      : Math.max(0.2, 0.6 - value / 50),
   );
 
   const rightOpacity = to(x, (value) =>
     value > 0
       ? Math.max(0.6, Math.min(1, value / 50))
-      : Math.max(0.2, 0.6 + value / 50)
+      : Math.max(0.2, 0.6 + value / 50),
   );
 
   if (!currentCard) {
-    console.log("No current card");
-    return <h1>Loading...</h1>;
+    return <h1>{t("game.loading")}</h1>;
   }
+
+  const leftLabel = pick(
+    currentCard.leftLabel,
+    currentCard.leftLabel_zh,
+    language,
+  );
+  const rightLabel = pick(
+    currentCard.rightLabel,
+    currentCard.rightLabel_zh,
+    language,
+  );
 
   return (
     <div className="swipe-game" style={{ position: "fixed" }}>
+      {/* Quit / back to menu button */}
+      <button
+        onClick={handleQuit}
+        className="small-button"
+        aria-label="Return to menu"
+      >
+        ✕
+      </button>
+
       {currentCard.section !== 5 && (
         <div className="progress-bar-container">
           <div
             className="progress-bar"
             style={{
-              width: `${
-                ((cards.length - cardsRemaining) / cards.length) * 100
-              }%`,
+              width: `${((cards.length - cardsRemaining) / cards.length) * 100}%`,
             }}
           />
         </div>
       )}
+
       <div className="cards-container">
         <animated.div
           className={
@@ -206,7 +213,7 @@ function SwipeGame({
             transform: to(
               [x, y, rotate, scale],
               (x, y, r, s) =>
-                `translate3d(${x}px,${y}px,0) rotate(${r}deg) scale(${s})`
+                `translate3d(${x}px,${y}px,0) rotate(${r}deg) scale(${s})`,
             ),
             touchAction: "none",
           }}
@@ -220,19 +227,20 @@ function SwipeGame({
               className="swipe-left"
               style={{ opacity: leftOpacity }}
             >
-              {currentCard.leftLabel}
+              {leftLabel}
             </animated.div>
             <animated.div
               className="swipe-right"
               style={{ opacity: rightOpacity }}
             >
-              {currentCard.rightLabel}
+              {rightLabel}
             </animated.div>
           </div>
         </animated.div>
       </div>
+
       {showInstructions && (
-        <div className="swipe-instructions">{"↤ swipe ↦"}</div>
+        <div className="swipe-instructions">{t("game.swipeHint")}</div>
       )}
     </div>
   );
