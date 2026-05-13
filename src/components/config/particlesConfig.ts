@@ -333,15 +333,15 @@ const particlesConfig = {
     },
     number: {
       density: {
-        enable: true,
+        enable: false,
         width: 1920,
         height: 1080
       },
       limit: {
         mode: "delete",
-        value: 0
+        value: 250
       },
-      value: 250
+      value: 80
     },
     opacity: {
       value: {
@@ -381,8 +381,8 @@ const particlesConfig = {
     },
     size: {
       value: {
-        min: 2,
-        max: 32
+        min: 10,
+        max: 24
       },
       animation: {
         count: 0,
