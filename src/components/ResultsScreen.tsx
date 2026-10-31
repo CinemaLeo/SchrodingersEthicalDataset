@@ -1,6 +1,6 @@
 import { JSX } from "react";
 import { GameVariables } from "../App";
-import { useLanguage } from "../context/LanguageContext";
+import { useLanguage, Language } from "../context/LanguageContext";
 import { translations } from "../locales/translations";
 
 interface ResultsScreenProps {
@@ -64,9 +64,8 @@ function getBarColor(stat: string, value: number): string {
   return scheme[2];
 }
 
-function generateSummary(variables: GameVariables, language: string): string {
-  const lang = language === "zh_tw" ? "zh_tw" : "en";
-  const s = translations[lang].results.summary;
+function generateSummary(variables: GameVariables, language: Language): string {
+  const s = translations[language].results.summary;
 
   const values = Object.entries(variables).map(([key, value]) => ({
     key: key as keyof GameVariables,

@@ -23,13 +23,18 @@ interface SwipeGameProps {
 }
 
 // Pick the right field based on language, falling back to English
-const pick = (en: string, zh?: string, lang?: string): string =>
-  lang === "zh_tw" && zh ? zh : en;
+const pick = (en: string, zh?: string, de?: string, lang?: string): string =>
+  lang === "zh_tw" && zh ? zh : lang === "de" && de ? de : en;
 
 const CardContent = ({ card }: { card: GameCard }): JSX.Element => {
   const { language } = useLanguage();
-  const prompt = pick(card.prompt, card.prompt_zh, language);
-  const imageLabel = pick(card.imageLabel ?? "", card.imageLabel_zh, language);
+  const prompt = pick(card.prompt, card.prompt_zh, card.prompt_de, language);
+  const imageLabel = pick(
+    card.imageLabel ?? "",
+    card.imageLabel_zh,
+    card.imageLabel_de,
+    language,
+  );
 
   if (card.type === CardType.IMAGE_TEXT) {
     return (
@@ -173,11 +178,13 @@ function SwipeGame({
   const leftLabel = pick(
     currentCard.leftLabel,
     currentCard.leftLabel_zh,
+    currentCard.leftLabel_de,
     language,
   );
   const rightLabel = pick(
     currentCard.rightLabel,
     currentCard.rightLabel_zh,
+    currentCard.rightLabel_de,
     language,
   );
 

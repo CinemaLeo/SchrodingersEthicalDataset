@@ -1,10 +1,14 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { translations } from "../locales/translations";
 
-export type Language = "en" | "zh_tw";
+export type Language = "en" | "de" | "zh_tw";
+
+// Order the language button cycles through
+const LANGUAGE_ORDER: Language[] = ["en", "de", "zh_tw"];
 
 interface LanguageContextType {
   language: Language;
+  setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
   t: (key: string) => string;
 }
@@ -15,7 +19,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>("en");
 
   const toggleLanguage = () =>
-    setLanguage((l) => (l === "en" ? "zh_tw" : "en"));
+    setLanguage(
+      (l) => LANGUAGE_ORDER[(LANGUAGE_ORDER.indexOf(l) + 1) % LANGUAGE_ORDER.length]
+    );
 
   const t = (key: string): string => {
     const keys = key.split(".");
@@ -27,7 +33,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

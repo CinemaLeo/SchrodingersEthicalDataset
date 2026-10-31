@@ -3,7 +3,7 @@ export const translations = {
     menu: {
       start: "Start",
       hint: "(best on mobile!)",
-      langToggle: "中文",
+      langToggle: "Deutsch",
     },
     game: {
       swipeHint: "↤ swipe ↦",
@@ -48,6 +48,57 @@ export const translations = {
       imagesFrom: "Images from",
       datasetWord: "dataset",
       under: "under",
+    },
+  },
+  de: {
+    menu: {
+      start: "Start",
+      hint: "(Für das beste Spielerlebnis empfehlen wir ein Mobilgerät!)",
+      langToggle: "中文",
+    },
+    game: {
+      swipeHint: "↤ wischen ↦",
+      quitConfirm: "Zurück zum Hauptmenü?",
+      menuButton: "☰ Menü",
+      loading: "Lädt...",
+    },
+    results: {
+      title: "Bias-Zertifikat",
+      subtitle: "Schrödingers ethischer Datensatz",
+      yourDatasetIs: "Dein Datensatz ist...",
+      continue: "Weiter",
+      labels: {
+        quantity: "Datenmenge",
+        privacy: "Datenschutz",
+        cultural: "Kultureller Bias",
+        racial: "Rassistischer Bias",
+        class: "Klassen-Bias",
+        gender: "Geschlechter-Bias",
+        overall: "Gesamt-Bias",
+      },
+      summary: {
+        intensity: {
+          extreme: ["unverschämt", "unglaublich", "gefährlich", "buchstäblich", "absolut"],
+          high: ["bemerkenswert", "ernsthaft", "deutlich", "überraschend"],
+          moderate: ["etwas", "mäßig", "relativ", "ziemlich"],
+        },
+        descriptors: {
+          quantity: { high: "umfassend", low: "unvollständig" },
+          privacy: { high: "sicher", low: "illegal" },
+          cultural: { high: "kulturspezifisch", low: "inklusiv" },
+          racial: { high: "rassistisch", low: "gerecht" },
+          class: { high: "klassistisch", low: "ausgewogen" },
+          gender: { high: "sexistisch", low: "fair" },
+          overall: { high: "voreingenommen", low: "unvoreingenommen" },
+        },
+      },
+    },
+    credits: {
+      playAgain: "Nochmal spielen",
+      basedOn: "Basierend auf:",
+      imagesFrom: "Bilder von",
+      datasetWord: "Datensatz",
+      under: "unter",
     },
   },
   zh_tw: {

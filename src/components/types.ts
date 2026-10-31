@@ -31,6 +31,11 @@ export interface GameCard {
   imageLabel_zh?: string;
   leftLabel_zh?: string;
   rightLabel_zh?: string;
+  // German content (optional — falls back to English if missing)
+  prompt_de?: string;
+  imageLabel_de?: string;
+  leftLabel_de?: string;
+  rightLabel_de?: string;
   // Effects
   reject: Effect;
   accept: Effect;
